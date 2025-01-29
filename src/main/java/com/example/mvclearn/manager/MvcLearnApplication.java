@@ -1,4 +1,4 @@
-package com.example.mvclearn;
+package com.example.mvclearn.manager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
