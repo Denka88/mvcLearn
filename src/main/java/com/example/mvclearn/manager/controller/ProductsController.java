@@ -1,11 +1,11 @@
 package com.example.mvclearn.manager.controller;
 
+import com.example.mvclearn.manager.entity.Product;
+import com.example.mvclearn.manager.payload.NewProductPayload;
 import com.example.mvclearn.manager.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("catalogue/products")
@@ -27,4 +27,15 @@ public class ProductsController {
         return "catalogue/products/new_product";
     }
 
+    @PostMapping("create")
+    private String createProduct(NewProductPayload payload){
+        Product product = this.productService.createProduct(payload.title(), payload.details());
+        return "redirect:/catalogue/products/list";
+    }
+    
+    @GetMapping("{productId:\\d+}")
+    public String getProduct(@PathVariable("productId") int productId, Model model){
+        model.addAttribute("product", this.productService.findProduct(productId).orElseThrow());
+        return "catalogue/products/product";
+    }
 }

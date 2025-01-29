@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DefaultProductService implements ProductService {
@@ -19,5 +20,15 @@ public class DefaultProductService implements ProductService {
     @Override
     public List<Product> findAllProducts() {
         return this.productRepository.findAll();
+    }
+
+    @Override
+    public Product createProduct(String title, String details) {
+        return this.productRepository.save(new Product(null, title, details));
+    }
+
+    @Override
+    public Optional<Product> findProduct(int productId) {
+        return this.productRepository.findById(productId);
     }
 }
