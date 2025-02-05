@@ -3,7 +3,6 @@ package com.example.mvclearn.manager.reposytory;
 import com.example.mvclearn.manager.entity.Product;
 import org.springframework.stereotype.Repository;
 
-import java.io.InputStream;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -13,7 +12,7 @@ public class InMemoryProductRepository implements ProductRepository {
     private final List<Product> products = Collections.synchronizedList(new LinkedList<>());
 
     public InMemoryProductRepository() {
-        IntStream.range(1,4)
+        IntStream.range(1,1)
                 .forEach(i -> this.products.add(new Product(i, "Товар №%d".formatted(i),
                         "Описание товара №%d".formatted(i))));
     }
@@ -38,5 +37,10 @@ public class InMemoryProductRepository implements ProductRepository {
         return this.products.stream()
                 .filter(product -> Objects.equals(productId, product.getId()))
                 .findFirst();
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        this.products.removeIf(product -> Objects.equals(id, product.getId()));
     }
 }
